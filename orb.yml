@@ -1,0 +1,33 @@
+version: 2.1
+description: sogaoh/orb-tfenv
+
+commands:
+  install:
+    description: install tfenv
+    steps:
+      # refs https://github.com/tfutils/tfenv#manual
+      - run:
+          name: Check out tfenv into ~/.tfenv
+          command: |
+            git clone https://github.com/tfutils/tfenv.git ~/.tfenv
+      - run:
+          name: Make symlinks for tfenv/bin/* scripts into a path that is already added to your $PATH
+          command: |
+            ln -s ~/.tfenv/bin/* /usr/bin
+
+examples:
+  install_and_terraform_init:
+    description: install tfenv & terraform init
+    usage:
+      version: 2.1
+      #orbs:
+      #  tfenv: sogaoh/orb-tfenv@x.y.z
+      tfenv_terraform_example: null
+      steps:
+        - checkout
+        - tfenv/install
+        - run:
+            command: |
+              cd /path/to/terraform_tf_dir
+              terraform init
+
